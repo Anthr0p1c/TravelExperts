@@ -20,8 +20,8 @@ namespace Travel_Experts.Controllers
 
 
 
-        // GET: Packages/Details/5
-        public async Task<IActionResult> Index(int? id)
+        // GET: Packages for homepage cards
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -37,6 +37,16 @@ namespace Travel_Experts.Controllers
 
             return View(package);
         }
+
+        //// POST: Package add to cart
+        //[HttpPost]
+        //public async Task<IActionResult> Details()
+        //{
+        //    var package = await _context.Packages
+        //        .FirstOrDefaultAsync(m => m.PackageId == ;
+
+        //}
+
 
         // GET: Packages/Create
         public IActionResult Create()
