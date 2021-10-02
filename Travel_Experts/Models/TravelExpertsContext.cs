@@ -47,7 +47,7 @@ namespace Travel_Experts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS; Database=TravelExperts; Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=LAPTOP-QM2T7R2P; Database=TravelExperts; Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
