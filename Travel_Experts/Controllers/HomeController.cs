@@ -41,7 +41,7 @@ namespace Travel_Experts.Controllers
         }
 
 
-        //
+        //POST: Package purchase
         [HttpPost]
         public IActionResult CheckOut([Bind("PackageId", "PkgName")] Package package)
         {
