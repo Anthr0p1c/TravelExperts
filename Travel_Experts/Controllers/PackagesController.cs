@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Travel_Experts;
+using Microsoft.AspNetCore.Http;
 
 namespace Travel_Experts.Controllers
 {
@@ -38,14 +39,31 @@ namespace Travel_Experts.Controllers
             return View(package);
         }
 
-        //// POST: Package add to cart
-        //[HttpPost]
-        //public async Task<IActionResult> Details()
-        //{
-        //    var package = await _context.Packages
-        //        .FirstOrDefaultAsync(m => m.PackageId == ;
+        // POST: Package add to cart
+        [HttpPost]
+        public IActionResult Details([Bind("PackageId", "PkgName")] Package package)
+        {
+            TempData["message"] = $"{package.PkgName} added to cart!";
+            TempData["alert"] = "alert-success";
 
-        //}
+            HttpContext.Session.SetInt32("PackageId", package.PackageId);
+
+            if(HttpContext.Session.GetInt32("Count") != null)
+                HttpContext.Session.SetInt32("Count", ((int)HttpContext.Session.GetInt32("Count") + 1));
+            else
+                HttpContext.Session.SetInt32("Count", 1);
+
+            return RedirectToAction();
+        }
+
+        //GET: Package check out
+        public async Task<IActionResult> CheckOut(int? id)
+        {
+            var package = await _context.Packages
+               .FirstOrDefaultAsync(m => m.PackageId == id);
+
+            return View(package);
+        }
 
 
         // GET: Packages/Create

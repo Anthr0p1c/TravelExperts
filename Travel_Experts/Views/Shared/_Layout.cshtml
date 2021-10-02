@@ -24,26 +24,47 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+
+                            <a asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
+                                <img src="~/img/cart.png" width="25" height="25" class="position-relative" />
+                                @if (Context.Session.GetInt32("Count") != null)
+                                {
+                                    <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
+                                        @Context.Session.GetInt32("Count")
+                                    </span>
+                                }
+                            </a>
+
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Travel_Experts - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @if (TempData.Keys.Contains("message"))
+    {
+        <div class="alert alert-dismissible @TempData["alert"]">
+            <strong>@TempData["message"]</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+    }
+
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - Travel_Experts - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

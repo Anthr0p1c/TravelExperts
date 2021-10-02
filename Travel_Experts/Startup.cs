@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Travel_Experts.Models;
+
 namespace Travel_Experts
 {
     public class Startup
@@ -24,6 +25,9 @@ namespace Travel_Experts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+            services.AddSession();
+
             services.AddControllersWithViews();
 
             services.AddDbContext<TravelExpertsContext>(options =>
@@ -50,6 +54,8 @@ namespace Travel_Experts
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

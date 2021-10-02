@@ -28,7 +28,11 @@
         </div>
 
         <div class="col">
-            <a asp-action="Add" asp-route-id=@Model.PackageId class="btn btn-primary">Add To Cart</a>
+            <form asp-action="Details">
+                <input type="hidden" asp-for="PackageId" />
+                <input type="hidden" asp-for="PkgName" />
+                <input type="submit" value="Add To Cart" class="btn btn-primary" />
+            </form>
         </div>
 
     </div>
