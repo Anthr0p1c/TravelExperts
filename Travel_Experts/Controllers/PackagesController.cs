@@ -56,14 +56,7 @@ namespace Travel_Experts.Controllers
             return RedirectToAction();
         }
 
-        //GET: Package check out
-        public async Task<IActionResult> CheckOut(int? id)
-        {
-            var package = await _context.Packages
-               .FirstOrDefaultAsync(m => m.PackageId == id);
 
-            return View(package);
-        }
 
 
         // GET: Packages/Create

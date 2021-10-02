@@ -68,7 +68,7 @@
                     @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
                     <li class="nav-item">
 
-                        <a asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
+                        <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
                             <img src="~/img/cart.png" width="25" height="25" class="position-relative" />
                             @if (Context.Session.GetInt32("Count") != null)
                             {
@@ -86,6 +86,25 @@
                 </ul>
             </div>
         </nav>
+
+
+
+        @* KEEP IN LAYOUT *@
+        @if (TempData.Keys.Contains("message"))
+        {
+            <div class="alert alert-dismissible @TempData["alert"]">
+                <strong>@TempData["message"]</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+
+
+
+
+
+
+
         @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Travel_Experts</a>
@@ -168,14 +187,7 @@
 
 
 
-    @* KEEP IN LAYOUT *@
-    @if (TempData.Keys.Contains("message"))
-    {
-        <div class="alert alert-dismissible @TempData["alert"]">
-            <strong>@TempData["message"]</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    }
+
 
 
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Travel_Experts.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Travel_Experts.Controllers
 {
@@ -28,6 +29,30 @@ namespace Travel_Experts.Controllers
 
             return View(packages);           
         }
+
+
+        //GET: Package check out
+        public async Task<IActionResult> CheckOut(int? id)
+        {
+            var package = await _context.Packages
+               .FirstOrDefaultAsync(m => m.PackageId == id);
+
+            return View(package);
+        }
+
+
+        //
+        [HttpPost]
+        public IActionResult CheckOut([Bind("PackageId", "PkgName")] Package package)
+        {
+            TempData["message"] = $"{package.PkgName} was successfully purchased!";
+            TempData["alert"] = "alert-success";
+
+            HttpContext.Session.SetInt32("PurchasedPackage", package.PackageId);
+
+            return RedirectToAction("Index");
+        }
+
 
         public IActionResult Privacy()
         {
