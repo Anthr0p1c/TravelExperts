@@ -62,6 +62,27 @@
                             <a class="dropdown-item" href="#">European Vacation</a>
                         </div>
                     </li>
+
+
+
+                    @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
+                    <li class="nav-item">
+
+                        <a asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
+                            <img src="~/img/cart.png" width="25" height="25" class="position-relative" />
+                            @if (Context.Session.GetInt32("Count") != null)
+                            {
+                                <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
+                                    @Context.Session.GetInt32("Count")
+                                </span>
+                            }
+                        </a>
+
+                    </li>
+
+
+
+
                 </ul>
             </div>
         </nav>
@@ -143,6 +164,11 @@
             @RenderBody()
         </main>
     </div>
+
+
+
+
+    @* KEEP IN LAYOUT *@
     @if (TempData.Keys.Contains("message"))
     {
         <div class="alert alert-dismissible @TempData["alert"]">
@@ -150,6 +176,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
+
+
+
+
 
         <div class="container">
             <main role="main" class="pb-3">
