@@ -49,7 +49,6 @@ namespace Travel_Experts
         [StringLength(50)]
         public string CustEmail { get; set; }
         public int? AgentId { get; set; }
-
         [ForeignKey(nameof(AgentId))]
         [InverseProperty("Customers")]
         public virtual Agent Agent { get; set; }

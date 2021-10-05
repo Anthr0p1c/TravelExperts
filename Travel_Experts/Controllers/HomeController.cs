@@ -34,10 +34,18 @@ namespace Travel_Experts.Controllers
         //GET: Package check out
         public async Task<IActionResult> CheckOut(int? id)
         {
-            var package = await _context.Packages
-               .FirstOrDefaultAsync(m => m.PackageId == id);
+            if(HttpContext.Session.GetInt32("PackageId") != null)
+            {
+                id = HttpContext.Session.GetInt32("PackageId");
+                var package = await _context.Packages
+                   .FirstOrDefaultAsync(m => m.PackageId == id);
 
-            return View(package);
+                return View(package);
+            }
+
+            TempData["message"] = $"Your cart is empty!";
+            TempData["alert"] = "alert-danger";
+            return RedirectToAction("Index");
         }
 
 
@@ -45,6 +53,8 @@ namespace Travel_Experts.Controllers
         [HttpPost]
         public IActionResult CheckOut([Bind("PackageId", "PkgName")] Package package)
         {
+            //var booking = await _context.Bookings.Add()
+
             TempData["message"] = $"{package.PkgName} was successfully purchased!";
             TempData["alert"] = "alert-success";
 
@@ -53,6 +63,19 @@ namespace Travel_Experts.Controllers
             return RedirectToAction("Index");
         }
 
+        //POST: Register
+        [HttpPost]
+        public IActionResult Register([Bind("email", "fname", "lname", "password")] WebCustomer register)
+        {
+            return RedirectToAction("Index");
+        }
+
+        //POST: Login
+        [HttpPost]
+        public IActionResult Login([Bind("email", "fname", "lname", "password")] WebCustomer login)
+        {
+            return RedirectToAction("Index");
+        }
 
         public IActionResult Privacy()
         {

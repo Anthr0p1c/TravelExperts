@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://kit.fontawesome.com/0c15b5b495.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
+
 </head>
 <body>
     <header>
@@ -94,14 +95,6 @@
 
     <div>
 
-        @* KEEP IN LAYOUT - can be moved, alert messages*@
-        @if (TempData.Keys.Contains("message"))
-        {
-            <div class="alert alert-dismissible @TempData["alert"]">
-                <strong>@TempData["message"]</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        }
 
         @* KEEP IN LAYOUT - register/login*@
         <div class="form-popup" id="myForm" style="display:none">
@@ -225,8 +218,22 @@
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
+                    
+
+
+                    @* KEEP IN LAYOUT - can be moved, alert messages*@
+                    @if (TempData.Keys.Contains("message"))
+                    {
+                        <div class="alert alert-dismissible @TempData["alert"]" style="z-index:3; position:absolute" width:100%>
+                            <strong class="text-center">@TempData["message"]</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+
+
                     <img class="d-block w-100"
-                            src="~/images/solaris.jpg" alt="First slide" />
+                         src="~/images/solaris.jpg" alt="First slide" />
                     <div class="carousel-caption d-none d-md-block">
                         <h3 class="text-light">Description one</h3>
                         <p>Another text here</p>
