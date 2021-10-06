@@ -28,6 +28,7 @@
     <div class="row">
         @foreach (var item in Model)
         {
+
             if(item.PkgAgencyCommission > 0)
                 {
 
@@ -38,6 +39,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Special title treatment</h5>
                                 <h6 class="card-subtitle text-muted">@Html.DisplayFor(modelItem => item.PkgDesc)</h6>
+
 
                    
                             </div>
