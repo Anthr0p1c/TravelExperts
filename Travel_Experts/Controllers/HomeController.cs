@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Travel_Experts.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Travel_Experts.Controllers
 {
@@ -30,7 +31,7 @@ namespace Travel_Experts.Controllers
             return View(packages);           
         }
 
-
+        [Authorize]
         //GET: Package check out
         public async Task<IActionResult> CheckOut(int? id)
         {
@@ -40,7 +41,7 @@ namespace Travel_Experts.Controllers
             return View(package);
         }
 
-
+        [Authorize]
         //POST: Package purchase
         [HttpPost]
         public IActionResult CheckOut([Bind("PackageId", "PkgName")] Package package)

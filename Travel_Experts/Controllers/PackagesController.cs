@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Travel_Experts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Travel_Experts.Controllers
 {
@@ -38,7 +39,7 @@ namespace Travel_Experts.Controllers
 
             return View(package);
         }
-
+        [Authorize]
         // POST: Package add to cart
         [HttpPost]
         public IActionResult Details([Bind("PackageId", "PkgName")] Package package)
