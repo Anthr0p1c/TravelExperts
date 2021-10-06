@@ -31,8 +31,14 @@ namespace Travel_Experts
         public decimal PkgBasePrice { get; set; }
         [Column(TypeName = "money")]
         public decimal? PkgAgencyCommission { get; set; }
+
         [StringLength(50)]
         public string PkgImageLocation { get; set; }
+
+        
+        public string PkgType { get; set; }
+        public string PkgLocation { get; set; }
+
 
         [InverseProperty(nameof(Booking.Package))]
         public virtual ICollection<Booking> Bookings { get; set; }
