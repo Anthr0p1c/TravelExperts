@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,9 +26,12 @@ namespace Travel_Experts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMemoryCache();
-            services.AddSession();
+            //added for cookies authentication - Priya -05Oct
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme). // cookies authentication
+                AddCookie(opt => opt.LoginPath = "/Login");// Login method of AccountController
 
+            services.AddMemoryCache();
+            services.AddSession();//added
             services.AddControllersWithViews();
 
             services.AddDbContext<TravelExpertsContext>(options =>
@@ -53,6 +57,7 @@ namespace Travel_Experts
 
             app.UseRouting();
 
+            app.UseAuthentication();//added for authentication - Priya
             app.UseAuthorization();
 
             app.UseSession();

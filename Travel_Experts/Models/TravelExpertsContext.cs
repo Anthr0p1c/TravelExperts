@@ -8,12 +8,10 @@ namespace Travel_Experts
 {
     public partial class TravelExpertsContext : DbContext
     {
- 
 
+        public TravelExpertsContext() : base() { }
         public TravelExpertsContext(DbContextOptions<TravelExpertsContext> options)
-            : base(options)
-        {
-        }
+            : base(options)  { }
 
         public virtual DbSet<Affiliation> Affiliations { get; set; }
         public virtual DbSet<Agency> Agencies { get; set; }
@@ -36,6 +34,10 @@ namespace Travel_Experts
         public virtual DbSet<SupplierContact> SupplierContacts { get; set; }
         public virtual DbSet<TripType> TripTypes { get; set; }
 
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<VwPackageProductSupplier> VwPackageProductSuppliers { get; set; }
+        public virtual DbSet<VwProductSupplier> VwProductSuppliers { get; set; }
         //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //        {
         //            if (!optionsBuilder.IsConfigured)
@@ -290,6 +292,39 @@ namespace Travel_Experts
                 entity.HasKey(e => e.TripTypeId)
                     .HasName("aaaaaTripTypes_PK")
                     .IsClustered(false);
+            });
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.RoleId)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Users_User_Roles");
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.Property(e => e.RoleId)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.RoleName).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VwPackageProductSupplier>(entity =>
+            {
+                entity.ToView("vw_PackageProductSuppliers");
+            });
+
+            modelBuilder.Entity<VwProductSupplier>(entity =>
+            {
+                entity.ToView("vw_ProductSuppliers");
             });
 
             OnModelCreatingPartial(modelBuilder);
