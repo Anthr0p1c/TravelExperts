@@ -8,15 +8,13 @@
 <div class="container">
     <div class="row">
         <form asp-action="Find">
-         
-            
-          
-
-            <select class="form-select" asp-items="ViewBag.PkgName"><option value="">Destination</option></select>
-            <select class="form-select" asp-items="ViewBag.PkgStartDate"></select>
-            <select class="form-select" asp-items="ViewBag.PkgDesc"><option value="">Trip Type</option></select>
+            <label>Destination: </label>
+            <select class="form-select" name="PkgLocation" id="PkgLocation" asp-items="ViewBag.PkgLocation"><option value="">Any</option></select>
+            <label>Departure Date: </label>
+            <select class="form-select" name="PkgStartDate" id="PkgStartDate" asp-items="ViewBag.PkgStartDate"></select>
+            <label>Travel Type: </label>
+            <select class="form-select" name="PkgType" id="PkgType"><option value="">Any</option><option value="Air">Air</option><option value="Cruise">Cruise</option><option value="Rail">Rail</option></select>
             <input type="submit" value="Find" class="btn btn-primary" />
-
         </form>
     </div>
 </div>

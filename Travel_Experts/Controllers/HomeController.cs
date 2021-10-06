@@ -5,6 +5,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Travel_Experts.Models;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Travel_Experts.Controllers
 {
@@ -18,14 +21,18 @@ namespace Travel_Experts.Controllers
         }
 
         // GET: Packages
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string location, string type)
         {
-            var packages = await _context.Packages.Include(i => i.Bookings).ToListAsync();
+            var packages = await _context.Packages.Include(i => i.Bookings).ToListAsync(); 
+            if (location != null)
+                packages = await _context.Packages.Where(i => (i.PkgLocation == location)).ToListAsync();
+            if (type != null)
+                packages = await _context.Packages.Where(i => (i.PkgType == type)).ToListAsync();
 
             // Find packages selections
-            ViewData["PkgName"] = new SelectList(_context.Packages, "PkgName", "PkgName");
+            ViewData["PkgLocation"] = new SelectList(_context.Packages, "PkgLocation", "PkgLocation");
             ViewData["PkgStartDate"] = new SelectList(_context.Packages, "PkgStartDate", "PkgStartDate");
-            ViewData["PkgDesc"] = new SelectList(_context.TripTypes, "TripTypeId", "Ttname");
+            ViewData["PkgType"] = new SelectList(_context.Packages, "PkgType", "PkgType");
 
             return View(packages);           
         }
@@ -61,6 +68,16 @@ namespace Travel_Experts.Controllers
             HttpContext.Session.SetInt32("PurchasedPackage", package.PackageId);
 
             return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        //POST: Find
+        public IActionResult Find([Bind("PkgLocation", "PkgStartDate", "PkgType")] Package package)
+        {
+            string PkgLocation = package.PkgLocation;
+            string PkgType = package.PkgType;
+            return RedirectToAction("Index", new { location = PkgLocation, @type = PkgType });
         }
 
         //POST: Register
