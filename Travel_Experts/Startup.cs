@@ -29,7 +29,7 @@ namespace Travel_Experts
         {
             //added for cookies authentication - Priya -05Oct
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme). // cookies authentication
-                AddCookie(opt => opt.LoginPath = "/Login");// Login method of AccountController
+                AddCookie(opt => opt.LoginPath = "/User/Login");// Login method of AccountController
 
             services.Configure<HtmlHelperOptions>(o => o.ClientValidationEnabled = false);
 
