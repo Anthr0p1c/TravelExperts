@@ -13,16 +13,6 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
 
-
-
-    @*<meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - Travel_Experts</title>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-    @*<link rel="stylesheet" href="~/css/site.css" />*@
-    @*<script src="https://kit.fontawesome.com/0c15b5b495.js" crossorigin="anonymous"></script>*@
-        @*<script type="text/javascript" src="~/js/site.js"></script>*@
-
 </head>
 <body>
     <header>
@@ -119,23 +109,6 @@
                     </ul>
                 </ul>
 
-                @* KEEP IN LAYOUT - register/login*@
-                <!--<a onclick="displayRegisterForm()" class="btn btn-primary">Register</a>
-      <a onclick="displayForm()" class="btn btn-primary">Sign in</a>-->
-                @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
-                <!--<li class="nav-item">
-
-        <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-            <img src="~/img/cart.png" width="25" height="25" class="position-relative" />
-            @if (Context.Session.GetInt32("Count") != null)
-            {
-                <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
-                    @Context.Session.GetInt32("Count")
-                </span>
-            }
-        </a>
-    </li>-->
-
 
             </div>
         </nav>
@@ -221,48 +194,6 @@
         @* END REGISTER/LOGIN *@
 
 
-
-
-
-
-        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Travel_Experts</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                            <li class="nav-item">
-
-                                <a asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-                                    <img src="~/img/cart.png" width="25" height="25" class="position-relative" />
-                                    @if (Context.Session.GetInt32("Count") != null)
-                                    {
-                                        <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
-                                            @Context.Session.GetInt32("Count")
-                                        </span>
-                                    }
-                                </a>
-
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>*@
-
-
-
-
-
-
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner" style="z-index:1;">
                 <div style="z-index: 2; background: rgba(0, 128, 0, 0); position:absolute; left:2%; top:4%;">
@@ -334,16 +265,7 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
-
-
-
-
-
-
 
 
     <div class="container">
