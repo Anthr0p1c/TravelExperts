@@ -100,7 +100,7 @@ namespace Travel_Experts.Controllers
 
         [HttpPost]
    
-        public IActionResult VerifyEmail([Bind(Prefix = "User.Email")] string Email)
+        public JsonResult VerifyEmail(string Email)
         {
             if (_context.Users.Where(i => i.Email.ToLowerInvariant().Equals(Email.ToLower())) != null)
             {
