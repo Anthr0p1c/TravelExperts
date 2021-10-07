@@ -5,59 +5,45 @@
 }
 
 
-<div class="container">
-    <div class="row">
-        <form asp-action="Find">
-            <label>Destination: </label>
-            <select class="form-select" name="PkgLocation" id="PkgLocation" asp-items="ViewBag.PkgLocation"><option value="">Any</option></select>
-            <label>Departure Date: </label>
-            <select class="form-select" name="PkgStartDate" id="PkgStartDate" asp-items="ViewBag.PkgStartDate"></select>
-            <label>Travel Type: </label>
-            <select class="form-select" name="PkgType" id="PkgType"><option value="">Any</option><option value="Air">Air</option><option value="Cruise">Cruise</option><option value="Rail">Rail</option></select>
-            <input type="submit" value="Find" class="btn btn-primary" />
-        </form>
-    </div>
-</div>
-
 
 <div class="text-center">
     <h1>Popular Packages</h1>
 </div>
 
+
+
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
         {
-
             if(item.PkgAgencyCommission > 0)
                 {
 
                 
                     <div class="col">
                         <div class="card mb-3">
-                            <h3 class="card-header">@Html.DisplayFor(modelItem => item.PkgName)</h3>
+                            <h3 class="card-header" style="height:75px">@Html.DisplayFor(modelItem => item.PkgName)</h3>
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <h6 class="card-subtitle text-muted">@Html.DisplayFor(modelItem => item.PkgDesc)</h6>
-
+                                @*<h5 class="card-title">Special title treatment</h5>*@
+                                @*<h6 class="card-subtitle text-muted" style="height:100px">@Html.DisplayFor(modelItem => item.PkgDesc)</h6>*@
 
                    
                             </div>
                             <a asp-controller="Packages" asp-action="Details" asp-route-id=@item.PackageId>
                                 <img src="~/images/@item.PkgImageLocation"  width="250" height="200"/>
                             </a>
-                            <div class="card-body">
+                            @*<div class="card-body">
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Cras justo odio</li>
+                            </div>*@
+                            <!--<ul class="list-group list-group-flush">-->
+                                @*<li class="list-group-item">Cras justo odio</li>
                                 <li class="list-group-item">Dapibus ac facilisis in</li>
-                                <li class="list-group-item">Vestibulum at eros</li>
-                            </ul>
-                            <div class="card-body">
+                                <li*@ <!--class="list-group-item">Vestibulum at eros</li>
+                            </ul>-->
+                            @*<div class="card-body">
                                 <a href="#" class="card-link">Card link</a>
                                 <a href="#" class="card-link">Another link</a>
-                            </div>
+                            </div>*@
                             <div class="card-footer text-muted">
                                 @Html.DisplayFor(modelItem => item.PkgStartDate)
                                 @Html.DisplayFor(modelItem => item.PkgBasePrice)
