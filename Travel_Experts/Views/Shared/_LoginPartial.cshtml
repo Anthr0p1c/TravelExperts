@@ -1,8 +1,10 @@
 
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@if ((Context.Request.Path != "/User/Login") && (Context.Request.Path != "/User/Register"))
+{
+    var path = Context.Request.Path;
+    Context.Session.SetString("Path", path);
+}
+
 <ul class="nav navbar-nav navbar-right">
 
     @if (Context.Session.GetInt32("Email") != null)
@@ -24,6 +26,9 @@
     }
     else
     {
+
+
+
 
         <li class="nav-item">
             <a class="nav-link text-dark" id="login" asp-controller="User" asp-action="Register">Register</a>
