@@ -28,11 +28,11 @@ function closeRegisterForm() {
 //Regex Validation
 function Validate() {
 
-    emailD = document.getElementById("email").value
-    passwordD = document.getElementById("password").value
-    passwordDB = document.getElementById("passwordB").value
-    fnameD = document.getElementById("firstname").value
-    lnameD = document.getElementById("lastname").value
+    emailD = document.getElementById("Email").value
+    passwordD = document.getElementById("Password").value
+    passwordDB = document.getElementById("cPassword").value
+    fnameD = document.getElementById("Firstname").value
+    lnameD = document.getElementById("Lastname").value
 
 
     var formData = {

@@ -20,12 +20,12 @@ namespace Travel_Experts.Controllers
         {
             if (returnUrl != null)
                 TempData["ReturnUrl"] = returnUrl; // preserve to come back to this page
-            return View();
+            return RedirectToRoute(returnUrl);
         }
 
         [HttpPost]
        
-        public async Task<IActionResult> LoginAsync([Bind("Email", "Password")] User user)
+        public async Task<IActionResult> LoginAsync([Bind("Email", "Password")] User user, [Bind("path")] string path)
         {
             User usr = UserManager.Authenticate(user.Email, user.Password);
             if (usr != null) //  authenticated
@@ -47,19 +47,19 @@ namespace Travel_Experts.Controllers
 
                 // generate authentication cookie
                 await HttpContext.SignInAsync("Cookies", principal);
-
+                return Redirect(path);
                 // if no return URl, go to the Index page of Rentals controller
-                if (TempData["ReturnUrl"] != null)
-                    return Redirect(TempData["ReturnUrl"].ToString());
-                else
-                    return RedirectToAction("Index", "Home");
+                //if (TempData["ReturnUrl"] != null)
+                //    return Redirect(TempData["ReturnUrl"].ToString());
+                //else
+                //    return RedirectToAction("Index", "Home");
             }
                 else
                     return RedirectToAction("Index", "Home");
         }//LoginAsync
 
         [HttpPost]
-        public RedirectToActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel)
+        public IActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel, [Bind("path")] string path)
         {
 
 
@@ -86,10 +86,10 @@ namespace Travel_Experts.Controllers
                 int CustomerId = CustomerManager.addCustomer(nCustomer);
                 HttpContext.Session.SetInt32("CustomerId", CustomerId);
                 HttpContext.Session.SetString("Email", ouserViewModel.Email);
-                return RedirectToAction("Index", "Home");
+                return Redirect(path);
             }
             else
-                return  RedirectToAction("form-container-register", "Home");
+                return Redirect(path);
         }
 
         //client side validation of email

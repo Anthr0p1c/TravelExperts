@@ -68,34 +68,51 @@
                             <a class="dropdown-item" href="#">European Vacation</a>
                         </div>
                     </li>
-
-
-                    @* KEEP IN LAYOUT - register/login*@
-                    <a onclick="displayRegisterForm()" class="btn btn-primary">Register</a>
-                    <a onclick="displayForm()" class="btn btn-primary">Sign in</a>
-
-
-                    @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
-                    <li class="nav-item">
-
-                        <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-                            <img src="~/img/cart.png" width="25" height="25" class="position-relative" />
-                            @if (Context.Session.GetInt32("Count") != null)
-                            {
-                                <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
-                                    @Context.Session.GetInt32("Count")
-                                </span>
-                            }
-                        </a>
-                    </li>
-
-
-
-
                 </ul>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
+                    <ul class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
+                        <ul class="nav navbar-nav navbar-right">
+
+                            @if (Context.Session.GetInt32("Email") != null)
+
+                            {
+                                <li class="nav-item">
+                                    <a id="manage" class="nav-link text-light">Hello @Context.Session.GetString("Email")!</a>
+                                </li>
+                                <li class="nav-item">
+                                    <form id="logoutForm" class="form-inline" asp-controller="User" asp-action="Logout" method='POST'>
+
+                                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                @* KEEP IN LAYOUT - register/login*@
+                                <a onclick="displayRegisterForm()" class="nav-link text-dark">Register</a>
+                                <a onclick="displayForm()" class="nav-link text-dark">Sign in</a>
+
+
+                                @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
+                                <li class="nav-item">
+
+                                    <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
+                                        <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:10px; margin-top:8px" />
+                                        @if (Context.Session.GetInt32("Count") != null)
+                                        {
+                                            <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
+                                                @Context.Session.GetInt32("Count")
+                                            </span>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </ul>
+                
+            
+                @*<div class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
                     <partial name="_LoginPartial.cshtml" />
-                </div>
+                </div>*@
             </div>
         </nav>
     </header>
@@ -112,9 +129,9 @@
                     <input type="text" placeholder="Enter Email" name="Email" id="Email" required>
 
                     <label for="password"><b>Password:</b></label>
-                    <input type="password" placeholder="Enter Password" name="Password" id="Password"  required>
+                    <input type="password" placeholder="Enter Password" name="Password" id="Password" required>
                 </div>
-
+                <input type="hidden" name="path" value=@Context.Request.Path />
                 <div class="flex">
                     <button type="submit" class="btn btn-warning" onclick="closeForm()">Close</button>
                     <button type="submit" class="btn btn-success">Sign in</button>
@@ -124,14 +141,14 @@
         </div>
 
         <div class="form-popup" id="myRegisterForm">
-            <form asp-controller="User" asp-action="Register" class="form-container-register" onSubmit="Validate()" method='POST'>
+            <form asp-controller="User" asp-action="Register" class="form-container-register"  method='POST'>
                 <h2>Register</h2>
                 <div class="row">
                     <div class="col-4">
                         <label for="Email">Email: </label>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="Email" id="Email" required />
+                        <input type="text" name="Email" id="Email" />
                     </div>
                 </div>
 
@@ -140,7 +157,7 @@
                         <label for="Password">Password: </label>
                     </div>
                     <div class="col-6">
-                        <input type="password" name="Password" id="Password" required/>
+                        <input type="password" name="Password" id="Password" />
                     </div>
                 </div>
 
@@ -149,7 +166,7 @@
                         <label for="cPassword">Confirm Password: </label>
                     </div>
                     <div class="col-6">
-                        <input type="password" name="cPassword" id="cPassword" required/>
+                        <input type="password" name="cPassword" id="cPassword" />
                     </div>
                 </div>
 
@@ -158,7 +175,7 @@
                         <label for="FirstName">First Name: </label>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="FirstName" id="FirstName" required />
+                        <input type="text" name="FirstName" id="FirstName" />
                     </div>
                 </div>
 
@@ -167,11 +184,22 @@
                         <label for="LastName">Last Name: </label>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="LastName" id="LastName" required />
+                        <input type="text" name="LastName" id="LastName" />
                     </div>
                 </div>
+                @{
+                    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                    var actionName = this.ViewContext.RouteData.Values["action"].ToString();
+                    var idName = "";
+                    if (this.ViewContext.RouteData.Values["id"] != null)
+                        idName = this.ViewContext.RouteData.Values["id"].ToString();
+                    
 
-                <h1 id="errors"></h1>
+                    var path = controllerName + "/" + actionName + "/" + idName;
+                }
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <h1 id="errors" name="errors"></h1>
+                <input type="hidden" name="path" value="@Context.Request.Path" />
 
                 <button type="button" class="btn btn-warning" onclick="closeRegisterForm()">Close</button>
                 <button type="submit" class="btn btn-success">Register</button>
