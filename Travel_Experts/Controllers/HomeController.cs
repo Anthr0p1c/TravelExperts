@@ -37,7 +37,7 @@ namespace Travel_Experts.Controllers
             return View(packages);           
         }
 
-
+        
         //GET: Package check out
         public async Task<IActionResult> CheckOut(int? id)
         {
