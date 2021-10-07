@@ -70,23 +70,8 @@ namespace Travel_Experts.Controllers
             return RedirectToAction("Index");
         }
 
-        //POST: Register
-/*        [HttpPost]
-        public IActionResult Register([Bind("email", "fname", "lname", "password")] User user)
-        {
-            return RedirectToAction("Index");
-        }
 
 
-
-        //POST: Login
-        [HttpPost]
-        public IActionResult Login([Bind("email", "password")] UserManager Authenticate)
-        {
-            return RedirectToAction("Index");
-        }
-
-*/
 
         [HttpPost]
         //POST: Find
@@ -104,12 +89,6 @@ namespace Travel_Experts.Controllers
             return RedirectToAction("Index");
         }
 
-        //POST: Login
-        [HttpPost]
-        public IActionResult Login([Bind("email", "fname", "lname", "password")] WebCustomer login)
-        {
-            return RedirectToAction("Index");
-        }
 
         public IActionResult Privacy()
         {

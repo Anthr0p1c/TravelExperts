@@ -16,16 +16,18 @@ namespace Travel_Experts.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult Login(string returnUrl = null  )
+        public IActionResult Login()
         {
-            if (returnUrl != null)
-                TempData["ReturnUrl"] = returnUrl; // preserve to come back to this page
-            return RedirectToRoute(returnUrl);
+            return View("Login");
+        }
+        public IActionResult Register()
+        {
+            return View("Register");
         }
 
         [HttpPost]
        
-        public async Task<IActionResult> LoginAsync([Bind("Email", "Password")] User user, [Bind("path")] string path)
+        public async Task<IActionResult> LoginAsync([Bind("Email", "Password")] User user)
         {
             User usr = UserManager.Authenticate(user.Email, user.Password);
             if (usr != null) //  authenticated
@@ -47,7 +49,7 @@ namespace Travel_Experts.Controllers
 
                 // generate authentication cookie
                 await HttpContext.SignInAsync("Cookies", principal);
-                return Redirect(path);
+                return Redirect(HttpContext.Session.GetString("Path"));
                 // if no return URl, go to the Index page of Rentals controller
                 //if (TempData["ReturnUrl"] != null)
                 //    return Redirect(TempData["ReturnUrl"].ToString());
@@ -55,7 +57,7 @@ namespace Travel_Experts.Controllers
                 //    return RedirectToAction("Index", "Home");
             }
                 else
-                    return RedirectToAction("Index", "Home");
+                    return View(user);
         }//LoginAsync
 
         [HttpPost]
@@ -86,10 +88,10 @@ namespace Travel_Experts.Controllers
                 int CustomerId = CustomerManager.addCustomer(nCustomer);
                 HttpContext.Session.SetInt32("CustomerId", CustomerId);
                 HttpContext.Session.SetString("Email", ouserViewModel.Email);
-                return Redirect(path);
+                return Redirect(HttpContext.Session.GetString("Path"));
             }
             else
-                return Redirect(path);
+                return View(ouserViewModel);
         }
 
         //client side validation of email
