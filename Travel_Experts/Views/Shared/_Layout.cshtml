@@ -8,10 +8,14 @@
     <title>@ViewData["Title"] - Travel_Experts</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://kit.fontawesome.com/0c15b5b495.js" crossorigin="anonymous"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
     <script type="text/javascript" src="~/js/site.js"></script>
+
+
 
 </head>
 <body>
@@ -73,47 +77,47 @@
                         </div>
                     </li>
                 </ul>
-                    <ul class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
-                        <ul class="nav navbar-nav navbar-right">
+                <ul class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
+                    <ul class="nav navbar-nav navbar-right">
 
-                            @if (Context.Session.GetInt32("Email") != null)
+                        @if (Context.Session.GetInt32("Email") != null)
 
-                            {
-                                <li class="nav-item">
-                                    <a id="manage" class="nav-link text-light">Hello @Context.Session.GetString("Email")!</a>
-                                </li>
-                                <li class="nav-item">
-                                    <form id="logoutForm" class="form-inline" asp-controller="User" asp-action="Logout" method='POST'>
+                        {
+                            <li class="nav-item">
+                                <a id="manage" class="nav-link text-light">Hello @Context.Session.GetString("Email")!</a>
+                            </li>
+                            <li class="nav-item">
+                                <form id="logoutForm" class="form-inline" asp-controller="User" asp-action="Logout" method='POST'>
 
-                                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                    </form>
-                                </li>
-                            }
-                            else
-                            {
-                                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
-                                    <partial name="_LoginPartial.cshtml" />
-                                </div>
+                                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
+                                <partial name="_LoginPartial.cshtml" />
+                            </div>
 
 
-                                @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
-                                <li class="nav-item">
+                            @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
+                            <li class="nav-item">
 
-                                    <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-                                        <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:10px; margin-top:8px" />
-                                        @if (Context.Session.GetInt32("Count") != null)
-                                        {
-                                            <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
-                                                @Context.Session.GetInt32("Count")
-                                            </span>
-                                        }
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                                <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
+                                    <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:10px; margin-top:8px" />
+                                    @if (Context.Session.GetInt32("Count") != null)
+                                    {
+                                        <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
+                                            @Context.Session.GetInt32("Count")
+                                        </span>
+                                    }
+                                </a>
+                            </li>
+                        }
                     </ul>
-                
-            
+                </ul>
+
+
 
             </div>
         </nav>
@@ -196,121 +200,121 @@
 
     <footer class="text-center text-lg-start bg-light text-muted">
 
-            <!-- Section: Social media -->
-            <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-                <!-- Left -->
-                <div class="me-5 d-none d-lg-block">
-                    <span>Get connected with us on social networks:</span>
-                </div>
-                <!-- Left -->
-                <!-- Right -->
-                <div>
-                    <a href="" class="me-4 text-reset">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="" class="me-4 text-reset">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-                <!-- Right -->
-            </section>
-            <!-- Section: Social media -->
-            <!-- Section: Links  -->
-            <section class="">
-                <div class="container text-center text-md-start mt-5">
-                    <!-- Grid row -->
-                    <div class="row mt-3">
-                        <!-- Grid column -->
-                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                            <!-- Content -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                <i class="fas fa-gem me-3"></i>The Travel Experts
-                            </h6>
-                            <p>
-                                Creating memories for a lifetime.
-                            </p>
-                        </div>
-                        <!-- Grid column -->
-                        <!-- Grid column -->
-                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                               Travel Products
-                            </h6>
-                            <p>
-                                <a href="#!" class="text-reset">All Inclusive</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Air</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Cruise</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Tours</a>
-                            </p>
-                        </div>
-                        <!-- Grid column -->
-                        <!-- Grid column -->
-                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                Useful links
-                            </h6>
-                            <p>
-                                <a href="#!" class="text-reset">Pricing</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Settings</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Orders</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-reset">Help</a>
-                            </p>
-                        </div>
-                        <!-- Grid column -->
-                        <!-- Grid column -->
-                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold mb-4">
-                                Contact
-                            </h6>
-                            <p><i class="fas fa-home me-3"></i> Calgary, AB T2P1N3, Canada</p>
-                            <p>
-                                <i class="fas fa-envelope me-3"></i>
-                                info@travelexperts.ca
-                            </p>
-                            <p><i class="fas fa-phone me-3"></i>  403 271 9873</p>
-                            <p><i class="fas fa-print me-3"></i> 403 271 9872</p>
-                        </div>
-                        <!-- Grid column -->
-                    </div>
-                    <!-- Grid row -->
-                </div>
-            </section>
-            <!-- Section: Links  -->
-            <!-- Copyright -->
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                &copy; 2021 - Travel_Experts - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+                <span>Get connected with us on social networks:</span>
             </div>
-            <!-- Copyright -->
+            <!-- Left -->
+            <!-- Right -->
+            <div>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="" class="me-4 text-reset">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>The Travel Experts
+                        </h6>
+                        <p>
+                            Creating memories for a lifetime.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Travel Products
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">All Inclusive</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Air</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Cruise</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Tours</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Useful links
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Pricing</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Settings</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Orders</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Help</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Contact
+                        </h6>
+                        <p><i class="fas fa-home me-3"></i> Calgary, AB T2P1N3, Canada</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            info@travelexperts.ca
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i>  403 271 9873</p>
+                        <p><i class="fas fa-print me-3"></i> 403 271 9872</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            &copy; 2021 - Travel_Experts - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        <!-- Copyright -->
 
         <div class="container">
-            
+
         </div>
     </footer>
     <!-- Footer -->

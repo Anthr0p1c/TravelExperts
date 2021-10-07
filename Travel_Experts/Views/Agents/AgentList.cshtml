@@ -9,19 +9,21 @@
     <div class="row">
         @foreach(Agency a in ViewBag.Agencies)
         {
-        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header">@a.AgncyCity</div>
+            <div class="col">
+                <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                    <div class="card-header">@a.AgncyCity</div>
 
-            <div class="card-body">
-                <h5 class="card-text">@a.AgncyPhone </h5>
+                    <div class="card-body">
+                        <h5 class="card-text">@a.AgncyPhone </h5>
 
-                <p class="card-title"> @a.AgncyAddress</p>
-                <p class="card-text"> Alberta</p>
+                        <p class="card-title"> @a.AgncyAddress</p>
+                        <p class="card-text"> Alberta</p>
 
-                <p class="card-text"> @a.AgncyPostal</p>
-                <p class="card-text"> @a.AgncyFax</p>
+                        <p class="card-text"> @a.AgncyPostal</p>
+                        <p class="card-text"> @a.AgncyFax</p>
+                    </div>
+                </div>
             </div>
-        </div>
         }
 
     </div>
@@ -34,15 +36,16 @@
     <div class="row">
         @foreach (var item in Model)
         {
+            <div class="col">
+                <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                    <div class="card-header">@Html.DisplayFor(modelItem => item.AgtFirstName) @Html.DisplayFor(modelItem => item.AgtMiddleInitial) @Html.DisplayFor(modelItem => item.AgtLastName)</div>
 
-            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-header">@Html.DisplayFor(modelItem => item.AgtFirstName) @Html.DisplayFor(modelItem => item.AgtMiddleInitial) @Html.DisplayFor(modelItem => item.AgtLastName)</div>
-
-                <div class="card-body">
-                    <img src="~/images/callcentre.png" />
-                    <h5 class="card-title"> @Html.DisplayFor(modelItem => item.AgtBusPhone)</h5>
-                    <p class="card-text"> @Html.DisplayFor(modelItem => item.AgtEmail)</p>
-                    <p class="card-text"> @Html.DisplayFor(modelItem => item.Agency.AgncyCity)</p>
+                    <div class="card-body">
+                        <img src="~/images/callcentre.png" />
+                        <h5 class="card-title"> @Html.DisplayFor(modelItem => item.AgtBusPhone)</h5>
+                        <p class="card-text"> @Html.DisplayFor(modelItem => item.AgtEmail)</p>
+                        <p class="card-text"> @Html.DisplayFor(modelItem => item.Agency.AgncyCity)</p>
+                    </div>
                 </div>
             </div>
         }

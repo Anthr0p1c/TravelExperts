@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,9 @@ namespace Travel_Experts
             //added for cookies authentication - Priya -05Oct
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme). // cookies authentication
                 AddCookie(opt => opt.LoginPath = "/Login");// Login method of AccountController
+
+            services.Configure<HtmlHelperOptions>(o => o.ClientValidationEnabled = false);
+
 
             services.AddMemoryCache();
             services.AddSession();//added

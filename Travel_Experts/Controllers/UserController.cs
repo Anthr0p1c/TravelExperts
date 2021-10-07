@@ -10,12 +10,20 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Travel_Experts.Models;
-
+using System.Linq;
 
 namespace Travel_Experts.Controllers
 {
     public class UserController : Controller
     {
+
+        private readonly TravelExpertsContext _context;
+
+        public UserController(TravelExpertsContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Login()
         {
             return View("Login");
@@ -50,18 +58,14 @@ namespace Travel_Experts.Controllers
                 // generate authentication cookie
                 await HttpContext.SignInAsync("Cookies", principal);
                 return Redirect(HttpContext.Session.GetString("Path"));
-                // if no return URl, go to the Index page of Rentals controller
-                //if (TempData["ReturnUrl"] != null)
-                //    return Redirect(TempData["ReturnUrl"].ToString());
-                //else
-                //    return RedirectToAction("Index", "Home");
+
             }
                 else
                     return View(user);
         }//LoginAsync
 
         [HttpPost]
-        public IActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel, [Bind("path")] string path)
+        public IActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel)
         {
 
 
@@ -94,11 +98,24 @@ namespace Travel_Experts.Controllers
                 return View(ouserViewModel);
         }
 
+        [HttpPost]
+   
+        public IActionResult VerifyEmail([Bind(Prefix = "User.Email")] string Email)
+        {
+            if (_context.Users.Where(i => i.Email.ToLowerInvariant().Equals(Email.ToLower())) != null)
+            {
+                return Json("Invalid Error Message");
+            }
+            return Json(true);
+        }
+
         //client side validation of email
-        /*       public JsonResult EmailExists(string Email)
-               {
-                   return Json(data: true, JsonRequestBehavior.AllowGet);
-               }*/
+        //public JsonResult VerifyEmail(string Email)
+        //{
+        //    bool isExist = _context.Users.Where(i => i.Email.ToLowerInvariant().Equals(Email.ToLower())) != null;
+
+        //    return Json(!isExist, new Newtonsoft.Json.JsonSerializerSettings());
+        //}
 
         public async Task<IActionResult> LogoutAsync()
         {
