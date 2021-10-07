@@ -15,7 +15,7 @@ namespace Travel_Experts.Models
  
         [Required(ErrorMessage = "Please enter your Email.")]
         [StringLength(50)]
-//        [Remote("EmailExists", UserController, ErrorMessage="Email already exists.")]
+        [Remote("VerifyEmail", "User", ErrorMessage="Email already exists.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter your First Name.")]
