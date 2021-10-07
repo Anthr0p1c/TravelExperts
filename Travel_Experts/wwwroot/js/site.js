@@ -19,7 +19,10 @@ function displayRegisterForm() {
 function closeRegisterForm() {
     document.getElementById("myRegisterForm").style.display = "none";
 }
-document.getElementById("userName").innerHTML(currentUser)
+
+
+
+
 
 
 //Regex Validation
@@ -70,3 +73,6 @@ function Validate() {
         document.getElementById("errors").innerHTML = "Thank you for registering!"
     }
 }
+
+
+

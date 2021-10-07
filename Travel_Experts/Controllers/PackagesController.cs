@@ -30,31 +30,44 @@ namespace Travel_Experts.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Packages
+            var package = await _context.Packages.Include(c => c.Bookings)
                 .FirstOrDefaultAsync(m => m.PackageId == id);
             if (package == null)
             {
                 return NotFound();
             }
-
+            ViewData["TravelerCount"] = new SelectList(_context.Bookings, "TravelerCount", "TravelerCount");
+            ViewBag.baseprice = ((int)package.PkgBasePrice);
+            
             return View(package);
         }
         [Authorize]
         // POST: Package add to cart
         [HttpPost]
-        public IActionResult Details([Bind("PackageId", "PkgName")] Package package)
+        public async Task<IActionResult> Details([Bind("PkgName", "PkgStartDate", "PkgEndDate", "PkgBasePrice", "PkgDesc", "PkgImageLocation")] Package package, [Bind("TravelerCount")] Booking booking)
         {
-            TempData["message"] = $"{package.PkgName} added to cart!";
-            TempData["alert"] = "alert-success";
+            
+            if (ModelState.IsValid)
+            {
+                TempData["message"] = $"{package.PkgName} added to cart!";
+                TempData["alert"] = "alert-success";
 
-            HttpContext.Session.SetInt32("PackageId", package.PackageId);
+                if (HttpContext.Session.GetInt32("Count") != null)
+                    HttpContext.Session.SetInt32("Count", ((int)HttpContext.Session.GetInt32("Count") + 1));
+                else
+                    HttpContext.Session.SetInt32("Count", 1);
 
-            if(HttpContext.Session.GetInt32("Count") != null)
-                HttpContext.Session.SetInt32("Count", ((int)HttpContext.Session.GetInt32("Count") + 1));
-            else
-                HttpContext.Session.SetInt32("Count", 1);
+                _context.Add(package);
+                await _context.SaveChangesAsync();
 
-            return RedirectToAction();
+                var newPackage = await _context.Packages.FirstOrDefaultAsync(m => m.PkgBasePrice == package.PkgBasePrice);
+                HttpContext.Session.SetInt32("PackageId", newPackage.PackageId);
+                //HttpContext.Session.SetInt32("TravelerCount", ((int)booking.TravelerCount));
+
+                return RedirectToAction("Index", "Home", new { area = "" }); ;
+            }
+
+            return View("Details");
         }
 
 

@@ -31,7 +31,11 @@
         <dd class="col-sm-10">
             $@Html.DisplayFor(model => model.PkgBasePrice)
         </dd>
-        </div>
+
+        @*<dd class="col-sm-10">
+            <p>Passenger count: @Context.Session.GetInt32("TravelerCount")</p>
+        </dd>*@
+</div>
 
         <div class="col">
             <form asp-action="CheckOut">
