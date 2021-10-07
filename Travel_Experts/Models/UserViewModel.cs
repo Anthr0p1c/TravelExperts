@@ -28,6 +28,7 @@ namespace Travel_Experts.Models
 
        
         [StringLength(75)]
+        [Compare("cPassword")]
         [Required(ErrorMessage = "Please enter a password.")]
         public string Password { get; set; }
 
