@@ -34,16 +34,7 @@ namespace Travel_Experts.Models
             db.Users.Add(user);
             db.SaveChanges();
         }//create user
- /*       public static int EmailExists( string email)
-        {
-            int iCount = 0;
-            TravelExpertsContext db = new TravelExpertsContext();
-            if (!string.IsNullOrEmpty(email))
-            {
-                iCount = db.Users.Where(c => c.CustEmail.ToLower() == email.ToLower() && c.CustomerID != CustId).Count();
-
-            }
-            return iCount;
-        }*/
+       
+       
     }//end class
 }//end namespace
