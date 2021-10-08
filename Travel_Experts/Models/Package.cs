@@ -22,14 +22,19 @@ namespace Travel_Experts
         [StringLength(50)]
         public string PkgName { get; set; }
         [Column(TypeName = "datetime")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime? PkgStartDate { get; set; }
         [Column(TypeName = "datetime")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime? PkgEndDate { get; set; }
         [StringLength(50)]
+        
         public string PkgDesc { get; set; }
         [Column(TypeName = "money")]
+        [DisplayFormat(DataFormatString = "${0:0.00}", ApplyFormatInEditMode = false)]
         public decimal PkgBasePrice { get; set; }
         [Column(TypeName = "money")]
+        [DisplayFormat(DataFormatString = "${0:0.00}", ApplyFormatInEditMode = false)]
         public decimal? PkgAgencyCommission { get; set; }
 
         [StringLength(50)]
