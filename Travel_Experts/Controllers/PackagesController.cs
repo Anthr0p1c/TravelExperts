@@ -41,7 +41,7 @@ namespace Travel_Experts.Controllers
             
             return View(package);
         }
-        [Authorize]
+        
         // POST: Package add to cart
         [HttpPost]
         public async Task<IActionResult> Details([Bind("PkgName", "PkgStartDate", "PkgEndDate", "PkgBasePrice", "PkgDesc", "PkgImageLocation")] Package package, [Bind("TravelerCount")] Booking booking)
@@ -62,7 +62,7 @@ namespace Travel_Experts.Controllers
 
                 var newPackage = await _context.Packages.FirstOrDefaultAsync(m => m.PkgBasePrice == package.PkgBasePrice);
                 HttpContext.Session.SetInt32("PackageId", newPackage.PackageId);
-                //HttpContext.Session.SetInt32("TravelerCount", ((int)booking.TravelerCount));
+                HttpContext.Session.SetString("TravelerCount", booking.TravelerCount.ToString());
 
                 return RedirectToAction("Index", "Home", new { area = "" }); ;
             }

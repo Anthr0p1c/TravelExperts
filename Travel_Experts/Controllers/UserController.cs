@@ -67,7 +67,12 @@ namespace Travel_Experts.Controllers
         [HttpPost]
         public IActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel)
         {
-
+            User check = _context.Users.FirstOrDefault(t => t.Email == ouserViewModel.Email);
+            if (check.Email != null)
+            {
+                ModelState.AddModelError("Email",
+                    $"The date {ouserViewModel.Email} is already in the database.");
+            }
 
             if (ModelState.IsValid)
             {
@@ -120,6 +125,7 @@ namespace Travel_Experts.Controllers
         public async Task<IActionResult> LogoutAsync()
         {
             // remove the authentication cookie
+            HttpContext.Session.SetInt32("Count", 0);
             await HttpContext.SignOutAsync("Cookies");
             HttpContext.Session.SetString("Email", "");
             HttpContext.Session.SetInt32("CustomerId", 0);// no current customer

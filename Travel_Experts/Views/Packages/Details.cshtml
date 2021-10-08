@@ -4,7 +4,9 @@
     ViewData["Title"] = "Packages";
 }
 
-<h1>Package Details</h1>
+<div class="text-center">
+    <h1>Package Details</h1>
+</div>
 
 <div class="container">
     <div class="row">
@@ -13,16 +15,16 @@
             <div class="card mb-3">
                 <h3 class="card-header">@Html.DisplayFor(model => model.PkgName)</h3>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
+      
                     <h6 class="card-subtitle text-muted">@Html.DisplayFor(model => model.PkgDesc)</h6>
                 </div>
 
 
 
-                <img src="~/images/@Model.PkgImageLocation" width="600" height="400" />
+                <img src="~/images/@Model.PkgImageLocation" width="625" height="400" />
                 
 
-                <div class="card-footer text-muted">
+                <div class="card-footer text-muted" style="text-align:center">
                     $@ViewBag.baseprice for 7 days
                 </div>
             </div>
@@ -35,9 +37,10 @@
                 <input type="hidden" asp-for="PkgImageLocation" />
                 <input type="hidden" asp-for="PkgBasePrice" id="PkgBasePrice" />
                 <input type="hidden" value=@ViewBag.baseprice id="baseprice" />
-
-                <h2>Select package details</h2>
-                <h3>$@(ViewBag.baseprice / 7) per person per day</h3>
+                <div class="text-center">
+                    <h2>Select package details</h2>
+                    <h3>$@(ViewBag.baseprice / 7) per person per day</h3>
+                </div>
                 <br />
 
                 <div class="row">
@@ -45,7 +48,7 @@
                         <label>Passengers: </label>
                     </div>
                     <div class="col">
-                        <select id="TravelerCount">
+                        <select name="TravelerCount" id="TravelerCount">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -62,7 +65,7 @@
                         <label>Start Date: </label>
                     </div>
                     <div class="col">
-                        <input type="text" asp-for="PkgStartDate" id="datepickerstart" />
+                        <input type="text" asp-for="PkgStartDate" name="datepickerstart" id="datepickerstart" />
                     </div>
                 </div>
                 <br />
@@ -72,7 +75,7 @@
                         <label>End Date: </label>
                     </div>
                     <div class="col">
-                        <input type="text" asp-for="PkgEndDate" id="datepickerend" />
+                        <input type="text" asp-for="PkgEndDate" name="datepickerstart" id="datepickerend" />
                     </div>
                 </div>
                 <br />
@@ -86,9 +89,9 @@
                     </div>
                 </div>
                 <br />
-
-                <input type="submit" value="Add To Cart" class="btn btn-primary" />
-
+                <div style="width:50%">
+                    <input type="submit" value="Add To Cart" class="btn btn-primary" />
+                </div>
             </form>
         </div>
 

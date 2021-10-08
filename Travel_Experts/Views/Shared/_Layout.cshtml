@@ -13,6 +13,16 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
 
+
+
+    @*<meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Travel_Experts</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    @*<script src="https://kit.fontawesome.com/0c15b5b495.js" crossorigin="anonymous"></script>*@
+        @*<script type="text/javascript" src="~/js/site.js"></script>*@
+
 </head>
 <body>
     <header>
@@ -72,42 +82,31 @@
                 <ul class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
                     <ul class="nav navbar-nav navbar-right">
 
-                        @if (Context.Session.GetInt32("Email") != null)
-
-                        {
-                            <li class="nav-item">
-                                <a id="manage" class="nav-link text-light">Hello @Context.Session.GetString("Email")!</a>
-                            </li>
-                            <li class="nav-item">
-                                <form id="logoutForm" class="form-inline" asp-controller="User" asp-action="Logout" method='POST'>
-
-                                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            @* KEEP IN LAYOUT - register/login*@
-                            <a onclick="displayRegisterForm()" class="nav-link text-dark">Register</a>
-                            <a onclick="displayForm()" class="nav-link text-dark">Sign in</a>
 
 
-                            @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
-                            <li class="nav-item">
+                        <partial name="_LoginPartial.cshtml" />
 
-                                <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-                                    <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:10px; margin-top:8px" />
-                                    @if (Context.Session.GetInt32("Count") != null)
-                                    {
-                                        <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
-                                            @Context.Session.GetInt32("Count")
-                                        </span>
-                                    }
-                                </a>
-                            </li>
-                        }
+
+
+
+
+
+                        @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
+                        <li class="nav-item">
+
+                            <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
+                                <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:16px; margin-top:8px" />
+                                @if ((Context.Session.GetInt32("Count") != null) && (Context.Session.GetInt32("Count") != 0))
+                                {
+                                    <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
+                                        @Context.Session.GetInt32("Count")
+                                    </span>
+                                }
+                            </a>
+                        </li>
                     </ul>
                 </ul>
+
 
 
             </div>
@@ -117,85 +116,29 @@
     <div>
 
 
-        @* KEEP IN LAYOUT - register/login*@
-        <div class="form-popup" id="myForm" style="display:none">
-            <form asp-controller="Home" asp-action="Login" class="form-container" method="POST">
-                <h2>Sign in</h2>
-                <div class="flex">
-                    <label for="username"><b>Email:</b></label>
-                    <input type="text" placeholder="Enter Email" name="username" required>
 
-                    <label for="password"><b>Password:</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" required>
-                </div>
 
-                <div class="flex">
-                    <button type="submit" class="btn btn-warning" onclick="closeForm()">Close</button>
-                    <button type="submit" class="btn btn-success">Sign in</button>
 
-                </div>
-            </form>
-        </div>
 
-        <div class="form-popup" id="myRegisterForm">
-            <form asp-controller="Home" asp-action="Register" class="form-container-register" onSubmit="Validate()" method='POST'>
-                <h2>Register</h2>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="email">Email: </label>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" name="email" id="email" />
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-4">
-                        <label for="password">Password: </label>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" name="password" id="password" />
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-4">
-                        <label for="confirm">Confirm Password: </label>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" name="confirm" id="confirm" />
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-4">
-                        <label for="fname">First Name: </label>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" name="fname" id="fname" />
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-4">
-                        <label for="lname">Last Name: </label>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" name="lname" id="lname" />
-                    </div>
-                </div>
-
-                <h1 id="errors"></h1>
-
-                <button type="button" class="btn btn-warning" onclick="closeRegisterForm()">Close</button>
-                <button type="submit" class="btn btn-success">Register</button>
-            </form>
-        </div>
-        @* END REGISTER/LOGIN *@
 
 
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner" style="z-index:1;">
+                <div style="position:absolute; left:40%; width:500px; z-index:3">
+
+                    @* KEEP IN LAYOUT - can be moved, alert messages*@
+                    @if (TempData.Keys.Contains("message"))
+                    {
+                        <div class="alert alert-dismissible @TempData["alert"]" style="z-index:3; position:absolute" width:100%>
+                            <strong class="text-center">@TempData["message"]</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+                </div>
                 <div style="z-index: 2; background: rgba(0, 128, 0, 0); position:absolute; left:2%; top:4%;">
                     <span style="color: darkblue; opacity:0.5">
                         <i class="fas fa-envelope-square fa-3x"></i>
@@ -207,20 +150,11 @@
 
 
 
-                    @* KEEP IN LAYOUT - can be moved, alert messages*@
-                    @if (TempData.Keys.Contains("message"))
-                    {
-                        <div class="alert alert-dismissible @TempData["alert"]" style="z-index:3; position:absolute" width:100%>
-                            <strong class="text-center">@TempData["message"]</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    }
-
 
 
                     <img class="d-block w-100"
                          src="~/images/solaris.jpg" alt="First slide" />
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block" style="bottom:30%">
                         <h3 class="text-light">Travel Experts</h3>
                         <p>We are here to help you to live out your dreams and discover the world</p>
                     </div>
@@ -228,7 +162,7 @@
                 <div class="carousel-item">
                     <img class="d-block w-100"
                          src="~/images/hardrock.jpg" alt="Second slide" />
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block" style="bottom:30%">
                         <h3 class="text-light">Travel Experts</h3>
                         <p>We are here to help you to live out your dreams and discover the world</p>
                     </div>
@@ -236,7 +170,7 @@
                 <div class="carousel-item">
                     <img class="d-block w-100"
                          src="~/images/gallery2.jpg" alt="Third slide" />
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block" style="bottom:30%">
                         <h3 class="text-light">Travel Experts</h3>
                         <p>We are here to help you to live out your dreams and discover the world</p>
                     </div>
@@ -251,28 +185,58 @@
                 <span class="sr-only">Next</span>
             </a>
 
-            <div class="container">
-                <div class="row-1">
-                    <form asp-action="Find">
 
-                        <select class="form-select" name="PkgLocation" id="PkgLocation" asp-items="ViewBag.PkgLocation"><option value="">Any</option></select>
-                        <select class="form-select" asp-items="ViewBag.PkgName"><option value="">Destination</option></select>
-                        <select class="form-select" asp-items="ViewBag.PkgStartDate"></select>
-                        <select class="form-select" asp-items="ViewBag.PkgDesc"><option value="">Trip Type</option></select>
-                        <input type="submit" value="Find" class="btn btn-primary" />
 
-                    </form>
-                </div>
-            </div>
+            @*<div class="container">
+                    <div class="row-1">
+                        <form asp-action="Find">
+
+                            <select class="form-select" name="PkgLocation" id="PkgLocation" asp-items="ViewBag.PkgLocation"><option value="">Any</option></select>
+                            <select class="form-select" asp-items="ViewBag.PkgName"><option value="">Destination</option></select>
+                            <select class="form-select" asp-items="ViewBag.PkgStartDate"></select>
+                            <select class="form-select" asp-items="ViewBag.PkgDesc"><option value="">Trip Type</option></select>
+                            <input type="submit" value="Find" class="btn btn-primary" />
+
+                        </form>
+                    </div>
+                </div>*@
+        </div>
+
+
+    </div>
+
+
+    <div class="container" style="z-index: 3; position: absolute; top:23%; left:35%; width:25%; padding:20px; background-color:rgba(255,255,255); border-radius:5px;">
+        <div class="row-1">
+            <form asp-action="Find">
+                <label style="color:lightblue; font-weight:bold; font-size:large">Destination: </label>
+                <select class="form-select" style="font-size:large; border-color:black; border-width:thin; height:50%" name="PkgLocation" id="PkgLocation" asp-items="ViewBag.PkgLocation"><option value="">Any</option></select>
+                <label style="color: lightblue; font-weight: bold; font-size: large">Departure Date: </label>
+                <input type="date" style="background-color: lightblue; border-radius: 4px; border-color: none; border-width: thin; padding: 20px; width: 100%;" />
+                <label style="color: lightblue; font-weight: bold; font-size: large">Travel Type: </label>
+                <select class="form-select" style="font-size: large; border-color: black; border-width: thin; height: 50% " name="PkgType" id="PkgType"><option value="">Any</option><option value="Air">Air</option><option value="Cruise">Cruise</option><option value="Rail">Rail</option></select>
+                <input type="submit" value="Find" class="btn btn-primary" />
+            </form>
         </div>
     </div>
 
 
-    <div class="container">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    
         <main role="main" class="pb-3 bg-primary">
             @RenderBody()
         </main>
-    </div>
+    
     <footer class="text-center text-lg-start bg-info text-muted">
 
         <!-- Section: Social media -->

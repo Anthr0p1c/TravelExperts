@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Travel_Experts.Controllers
 {
@@ -23,17 +24,16 @@ namespace Travel_Experts.Controllers
         // GET: Packages
         public async Task<IActionResult> Index(string location, string type)
         {
-            var packages = await _context.Packages.Include(i => i.Bookings).ToListAsync(); 
+            var packages = await _context.Packages.Include(i => i.Bookings).Where(i => (i.PkgLocation != null)).ToListAsync(); 
             if (location != null)
                 packages = await _context.Packages.Where(i => (i.PkgLocation == location)).ToListAsync();
             if (type != null)
                 packages = await _context.Packages.Where(i => (i.PkgType == type)).ToListAsync();
 
             // Find packages selections
-            ViewData["PkgLocation"] = new SelectList(_context.Packages, "PkgLocation", "PkgLocation");
+            ViewData["PkgLocation"] = new SelectList(packages, "PkgLocation", "PkgLocation");
             ViewData["PkgStartDate"] = new SelectList(_context.Packages, "PkgStartDate", "PkgStartDate");
             ViewData["PkgType"] = new SelectList(_context.Packages, "PkgType", "PkgType");
-
             return View(packages);           
         }
 
@@ -55,17 +55,25 @@ namespace Travel_Experts.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [Authorize]
         //POST: Package purchase
         [HttpPost]
-        public IActionResult CheckOut([Bind("PackageId", "PkgName")] Package package)
+        public async Task<IActionResult> CheckOut([Bind("PackageId", "PkgName")] Package package)
         {
-            //var booking = await _context.Bookings.Add()
+            var newBooking = new Booking();
+            newBooking.BookingDate = System.DateTime.Now;
+            newBooking.CustomerId = HttpContext.Session.GetInt32("CustomerId");
+            newBooking.TravelerCount = float.Parse(HttpContext.Session.GetString("TravelerCount"));
+            newBooking.PackageId = package.PackageId;
+
+            var booking = _context.Bookings.Add(newBooking);
+            await _context.SaveChangesAsync();
 
             TempData["message"] = $"{package.PkgName} was successfully purchased!";
             TempData["alert"] = "alert-success";
 
             HttpContext.Session.SetInt32("PurchasedPackage", package.PackageId);
+            HttpContext.Session.SetInt32("Count", 0);
 
             return RedirectToAction("Index");
         }
