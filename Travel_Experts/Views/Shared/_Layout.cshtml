@@ -99,10 +99,10 @@
 
 
                         @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
-                        <li class="nav-item">
+                        <li class="nav-item" style="margin-right: 20px;">
 
                             <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-                                <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:16px; margin-top:8px" />
+                                <img src="~/img/cart.png" width="25" height="25" class="position-relative" style=" margin-top:8px" />
                                 @if ((Context.Session.GetInt32("Count") != null) && (Context.Session.GetInt32("Count") != 0))
                                 {
                                     <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">

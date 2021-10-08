@@ -68,10 +68,11 @@ namespace Travel_Experts.Controllers
         public IActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel)
         {
             User check = _context.Users.FirstOrDefault(t => t.Email == ouserViewModel.Email);
-            if (check.Email != null)
+            if (check != null)
             {
                 ModelState.AddModelError("Email",
-                    $"The date {ouserViewModel.Email} is already in the database.");
+                    $"The {ouserViewModel.Email} is already in the database.");
+                return View(ouserViewModel);
             }
 
             if (ModelState.IsValid)
