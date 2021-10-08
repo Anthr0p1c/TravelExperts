@@ -44,7 +44,7 @@ namespace Travel_Experts.Controllers
         
         // POST: Package add to cart
         [HttpPost]
-        public async Task<IActionResult> Details([Bind("PkgName", "PkgStartDate", "PkgEndDate", "PkgBasePrice", "PkgDesc", "PkgImageLocation")] Package package, [Bind("TravelerCount")] Booking booking)
+        public async Task<IActionResult> Details([Bind("PkgName", "PkgStartDate", "PkgEndDate", "PkgBasePrice", "PkgDesc", "PkgImageLocation", "PkgLocation", "PkgType")] Package package, [Bind("TravelerCount")] Booking booking)
         {
             
             if (ModelState.IsValid)

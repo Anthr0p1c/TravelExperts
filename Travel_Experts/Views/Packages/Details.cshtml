@@ -35,6 +35,8 @@
                 <input type="hidden" asp-for="PkgName" />
                 <input type="hidden" asp-for="PkgDesc" />
                 <input type="hidden" asp-for="PkgImageLocation" />
+                <input type="hidden" asp-for="PkgType" />
+                <input type="hidden" asp-for="PkgLocation" />
                 <input type="hidden" asp-for="PkgBasePrice" id="PkgBasePrice" />
                 <input type="hidden" value=@ViewBag.baseprice id="baseprice" />
                 <div class="text-center">
@@ -65,7 +67,7 @@
                         <label>Start Date: </label>
                     </div>
                     <div class="col">
-                        <input type="text" asp-for="PkgStartDate" name="datepickerstart" id="datepickerstart" />
+                        <input type="text" asp-for="PkgStartDate" name="PkgStartDate" id="PkgStartDate" />
                     </div>
                 </div>
                 <br />
@@ -75,7 +77,7 @@
                         <label>End Date: </label>
                     </div>
                     <div class="col">
-                        <input type="text" asp-for="PkgEndDate" name="datepickerstart" id="datepickerend" />
+                        <input type="text" asp-for="PkgEndDate" name="PkgEndDate" id="PkgEndDate" />
                     </div>
                 </div>
                 <br />
@@ -107,33 +109,33 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#datepickerend").datepicker
+            $("#PkgEndDate").datepicker
                 ({
                     altField: "#alternate1",
                     altFormat: "DD, d MM, yy",
                     minDate: new Date((new Date()).getTime() + 86400000),
                     maxDate: "+60D",
                     onSelect: function (selected) {
-                        $("#datepickerend").datepicker("option", "maxDate", selected);
+                        $("#PkgEndDate").datepicker("option", "maxDate", selected);
                         calcDiff();
                     }
                 });
 
-            $("#datepickerstart").datepicker
+            $("#PkgStartDate").datepicker
                 ({
                     altField: "#alternate",
                     altFormat: "DD, d MM, yy",
                     minDate: new Date(),
                     maxDate: "+60D",
                     onSelect: function (selected) {
-                        $("#datepickerstart").datepicker("option", "minDate", selected);
+                        $("#PkgStartDate").datepicker("option", "minDate", selected);
                         calcDiff();
                     }
                 });
 
         function calcDiff() {
-            var date1 = $('#datepickerstart').datepicker('getDate');
-            var date2 = $('#datepickerend').datepicker('getDate');
+            var date1 = $('#PkgStartDate').datepicker('getDate');
+            var date2 = $('#PkgEndDate').datepicker('getDate');
             var base = $('#baseprice').val();
             var passengers = $('#TravelerCount').val();
             var display = "";

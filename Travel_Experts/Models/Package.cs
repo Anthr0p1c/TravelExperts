@@ -22,10 +22,11 @@ namespace Travel_Experts
         [StringLength(50)]
         public string PkgName { get; set; }
         [Column(TypeName = "datetime")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+
         public DateTime? PkgStartDate { get; set; }
         [Column(TypeName = "datetime")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? PkgEndDate { get; set; }
         [StringLength(50)]
         
