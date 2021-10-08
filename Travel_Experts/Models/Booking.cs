@@ -22,6 +22,9 @@ namespace Travel_Experts
 
         [Key]
         public int BookingId { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Column(TypeName = "datetime")]
         public DateTime? BookingDate { get; set; }
         [StringLength(50)]

@@ -12,6 +12,19 @@ namespace Travel_Experts.Controllers
     public class CustomerController : Controller
     {
         // GET: CustomerController
+
+        [Authorize]
+
+        
+        public ActionResult Profile()
+        {
+
+
+               int CustomerId = (int)HttpContext.Session.GetInt32("CustomerId");
+            //int CustomerId = 119;
+
+            try
+
    //     [Authorize]
         public ActionResult Index()
         {
@@ -19,6 +32,7 @@ namespace Travel_Experts.Controllers
             if (CustomerId>0)
             {
                 try
+
                 {
                     Customer customer = CustomerManager.getCustomer(CustomerId);
                     List<Booking> bookings = CustomerManager.getCustomerBookings(CustomerId);
@@ -27,6 +41,15 @@ namespace Travel_Experts.Controllers
                     {
                         cBookings = bookings,
                         Customer = customer,
+
+                        ActiveCategory = "F",
+                        LoadMode = "List"
+                    };
+
+                    
+                    //load edit view in create mode
+                    return View("Profile",cvm);
+
                         ActiveCategory = "Future",
                         LoadMode = "Details"
                     };
@@ -35,16 +58,63 @@ namespace Travel_Experts.Controllers
                     //load edit view in create mode
                     return View("Details", cvm);
 
+
                     //load edit view in create mode
                     //return View("Edit", new Incident());
                 }
                 catch (Exception)
                 {
+
+                TempData["alert"] = "alert-danger";
+                TempData["message"] = "Error loading page to show customer details.";
+                    return View();
+                }
+
+            
+            
+        }
+       // [Route("[controller]s/{id?}")]
+        public ActionResult Index(string id = "F")//uses view model
+        {
+            int CustomerId = (int)HttpContext.Session.GetInt32("CustomerId");
+            List<Booking> bookings = null;
+
+
+            Customer customer = CustomerManager.getCustomer(CustomerId);
+            try
+            {
+                if (id == "F")//future bookings - can be deleted
+                    bookings = CustomerManager.getCustomerBookings(CustomerId).Where(b=>b.BookingDate> DateTime.Today).ToList();
+
+                else if (id == "P")//open incidents - date closed is null
+                {
+                    bookings = CustomerManager.getCustomerBookings(CustomerId).Where(b => b.BookingDate > DateTime.Today).ToList();
+                }
+
+
+            }
+            catch (Exception)
+            {
+                ViewBag.Message = "Database error getting Incidents data.";
+            }
+
+            var cvm = new CustomerViewModel
+            {
+                cBookings = bookings,
+                Customer = customer,
+                ActiveCategory = id,
+                LoadMode = "List"
+                
+            };
+            return View(cvm);
+
+
                     ViewBag.Message = "Error loading page to show customer details.";
                     return RedirectToAction(nameof(Index));
                 }
             }
             return View();
+
         }
 
         // GET: CustomerController/Details/5
@@ -77,8 +147,25 @@ namespace Travel_Experts.Controllers
         // GET: CustomerController/Edit/5
         public ActionResult Edit(int id)
         {
+
+            try
+            {
+                
+                ViewBag.Action = "Edit"; //to indicate we are editing an existing recrod.
+                Customer customer = CustomerManager.getCustomer(id);
+                return View("EditProfile",customer);
+            }
+            catch
+            {
+                ViewBag.Message = "Error loading page to edit customer.";
+                return View();
+            }
+        }
+    
+
             return View();
         }
+
 
         // POST: CustomerController/Edit/5
         [HttpPost]

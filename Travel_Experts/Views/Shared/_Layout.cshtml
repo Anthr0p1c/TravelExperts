@@ -56,6 +56,9 @@
 
                         <a asp-controller="Agents" asp-action="AgentList" class="nav-link">Agents</a>
                     </li>
+                    <li class="nav-item">
+                        <a asp-controller="Customer" asp-action="Profile" class="nav-link">Profile</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Tour Packages
@@ -67,7 +70,7 @@
                             <a class="dropdown-item" href="#">European Vacation</a>
                         </div>
                     </li>
-                </ul>
+
 
                 <ul class="navbar-collapse collapse d-sm-inline-flex justify-content-sm-end">
                     <ul class="nav navbar-nav navbar-right">
@@ -92,8 +95,10 @@
                             <a onclick="displayForm()" class="nav-link text-dark">Sign in</a>
 
 
+
                             @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
                             <li class="nav-item">
+
 
                                 <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
                                     <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:10px; margin-top:8px" />
