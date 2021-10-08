@@ -1,0 +1,63 @@
+﻿@model Travel_Experts.Models.CustomerViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+<h1>Profile</h1>
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src="/images/profile.png" class="card-img" alt="profile.png">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Customer.CustFirstName @Model.Customer.CustLastName </h5>
+                <p class="card-text">@Model.Customer.CustEmail </p>
+                <p class="card-text">@Model.Customer.CustAddress </p>
+                <p class="card-text">@Model.Customer.CustPostal </p>
+                <p class="card-text">@Model.Customer.CustHomePhone </p>
+
+                <a asp-action="EditProfile" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <h1>Bookings </h1>
+
+    <div class="row">
+
+
+        @foreach (var item in Model.cBookings)
+        {
+
+            <div class="col-4">
+                <div class="card-deck">
+                    <div class="card border-primary mb-3" style="max-width: 25rem; max-height: 50rem">
+
+                        <div class="card-body text-primary">
+
+                            <h3 class="card-text">Destination: @item.Package.PkgLocation </h3>
+                            <h4 class="card-text">Departing : @item.Package.PkgStartDate.Value.ToShortDateString() </h4>
+                            <h5 class="card-text">Returning : @item.Package.PkgEndDate.Value.ToShortDateString() </h5>
+                            <h5 class="card-text">No. of Travellers: @item.TravelerCount </h5>
+                            <h5 class="card-text">Booking ID: @item.BookingId </h5>
+                            <h6 class="card-text">Booking Date: @item.BookingDate.Value.ToShortDateString() </h6>
+                            <h6 class="card-text">Package Name: @item.Package.PkgName </h6>
+                            <h6 class="card-text">Cost / Person: @((double)item.Package.PkgBasePrice)  </h6>
+
+                            @if (item.Package.PkgStartDate > DateTime.Today)
+                            {<a asp-action="EditBooking" asp-controller="Booking" asp-route-id="@item.BookingId">Change</a>
+                             <a asp-action="DelBooking" asp-controller="Booking" asp-route-id="@item.BookingId">Cancel Booking</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>

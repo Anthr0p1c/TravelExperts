@@ -7,9 +7,11 @@
 
 
 
+
     @if (Context.Session.GetInt32("Email") != null)
 
     {
+
         <li class="nav-item">
             <a id="manage" class="nav-link text-light" style="font-size:medium">Welcome @Context.Session.GetString("Email")!</a>
 

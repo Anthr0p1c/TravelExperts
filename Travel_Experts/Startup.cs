@@ -31,8 +31,6 @@ namespace Travel_Experts
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme). // cookies authentication
                 AddCookie(opt => opt.LoginPath = "/User/Login");// Login method of AccountController
 
-            services.Configure<HtmlHelperOptions>(o => o.ClientValidationEnabled = false);
-
 
             services.AddMemoryCache();
             services.AddSession();//added

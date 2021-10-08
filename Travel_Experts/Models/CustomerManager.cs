@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,13 +31,19 @@ namespace Travel_Experts.Models
             return customer;
         }
 
+
         public static List<Booking> getCustomerBookings(int CustId)
         {
             List<Booking> bookings;
             TravelExpertsContext db = new TravelExpertsContext();
+
+            bookings = db.Bookings.Include(p=>p.Package).Where(b => b.CustomerId == CustId).OrderByDescending(b=>b.BookingId).ToList();
+
             bookings = db.Bookings.Where(b => b.CustomerId == CustId).ToList();
+
             return bookings;
         }
+
 
 
     }
