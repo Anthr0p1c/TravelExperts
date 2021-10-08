@@ -92,13 +92,13 @@
 
 
                         @* KEEP IN LAYOUT - can be moved, shopping cart icon in nav bar*@
-                        <li class="nav-item">
+                        <li class="nav-item" style="margin-right:20px">
 
                             <a asp-controller="Home" asp-action="CheckOut" asp-route-id=@Context.Session.GetInt32("PackageId")>
-                                <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-right:16px; margin-top:8px" />
+                                <img src="~/img/cart.png" width="25" height="25" class="position-relative" style="margin-top:8px" />
                                 @if ((Context.Session.GetInt32("Count") != null) && (Context.Session.GetInt32("Count") != 0))
                                 {
-                                    <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger">
+                                    <span class="position-absolute top-3 start-2 translate-middle badge rounded-pill bg-danger" >
                                         @Context.Session.GetInt32("Count")
                                     </span>
                                 }
@@ -206,7 +206,7 @@
     </div>
 
 
-    <div class="container" style="z-index: 3; position: absolute; top:23%; left:35%; width:25%; padding:20px; background-color:rgba(255,255,255); border-radius:5px;">
+    <div class="container" id="findcon" style="z-index: 3; position: absolute; top:23%; left:35%; width:25%; padding:20px; background-color:rgba(255,255,255); border-radius:5px;">
         <div class="row-1">
             <form asp-action="Find">
                 <label style="color:lightblue; font-weight:bold; font-size:large">Destination: </label>
