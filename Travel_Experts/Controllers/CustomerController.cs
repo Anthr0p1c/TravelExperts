@@ -12,6 +12,7 @@ namespace Travel_Experts.Controllers
     public class CustomerController : Controller
     {
         // GET: CustomerController
+
         [Authorize]
 
         
@@ -23,6 +24,15 @@ namespace Travel_Experts.Controllers
             //int CustomerId = 119;
 
             try
+
+   //     [Authorize]
+        public ActionResult Index()
+        {
+            int CustomerId =(int)HttpContext.Session.GetInt32("CustomerId");
+            if (CustomerId>0)
+            {
+                try
+
                 {
                     Customer customer = CustomerManager.getCustomer(CustomerId);
                     List<Booking> bookings = CustomerManager.getCustomerBookings(CustomerId);
@@ -31,6 +41,7 @@ namespace Travel_Experts.Controllers
                     {
                         cBookings = bookings,
                         Customer = customer,
+
                         ActiveCategory = "F",
                         LoadMode = "List"
                     };
@@ -39,11 +50,21 @@ namespace Travel_Experts.Controllers
                     //load edit view in create mode
                     return View("Profile",cvm);
 
+                        ActiveCategory = "Future",
+                        LoadMode = "Details"
+                    };
+
+                    ViewBag.Message = "";
+                    //load edit view in create mode
+                    return View("Details", cvm);
+
+
                     //load edit view in create mode
                     //return View("Edit", new Incident());
                 }
                 catch (Exception)
                 {
+
                 TempData["alert"] = "alert-danger";
                 TempData["message"] = "Error loading page to show customer details.";
                     return View();
@@ -87,6 +108,13 @@ namespace Travel_Experts.Controllers
             };
             return View(cvm);
 
+
+                    ViewBag.Message = "Error loading page to show customer details.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View();
+
         }
 
         // GET: CustomerController/Details/5
@@ -119,6 +147,7 @@ namespace Travel_Experts.Controllers
         // GET: CustomerController/Edit/5
         public ActionResult Edit(int id)
         {
+
             try
             {
                 
@@ -133,6 +162,10 @@ namespace Travel_Experts.Controllers
             }
         }
     
+
+            return View();
+        }
+
 
         // POST: CustomerController/Edit/5
         [HttpPost]

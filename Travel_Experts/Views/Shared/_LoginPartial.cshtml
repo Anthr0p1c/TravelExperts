@@ -1,46 +1,45 @@
 
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@if ((Context.Request.Path != "/User/Login") && (Context.Request.Path != "/User/Register"))
+{
+    var path = Context.Request.Path;
+    Context.Session.SetString("Path", path);
+}
+
 <ul class="nav navbar-nav navbar-right">
 
-<<<<<<< Updated upstream
-@if (Context.Session.GetInt32("Email") != null)
-      
-{
-=======
+
     @if (Context.Session.GetInt32("Email") != null)
 
     {
+
         <li class="nav-item">
             <a id="manage" class="nav-link text-light">Welcome @Context.Session.GetString("Email")!</a>
 
         </li>
         <li class="nav-item">
-
-            <a asp-controller="Customer" asp-action="Index" class="nav-link">Profile</a>
-        </li>
->>>>>>> Stashed changes
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-light">Hello @Context.Session.GetString("Email")!</a>
+            <a id="profile" asp-controller="Customer" asp-action="Index">My Profile</a>
         </li>
         <li class="nav-item">
-            <form id="logoutForm" class="form-inline" asp-controller="User" asp-action="Logout"  method='POST'>
-                
-                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                </form>
+            <form id="logoutForm" class="form-inline" asp-controller="User" asp-action="Logout" method='POST'>
+
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
         </li>
-}
-else
-{
+    }
+    else
+    {
+
+
+
 
         <li class="nav-item">
-            <a class="nav-link text-dark" id="login" asp-page="/User/Login">Login</a>
+            <a class="nav-link text-dark" id="login" asp-controller="User" asp-action="Register">Register</a>
         </li>
-}
- </ul>
-
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="login" asp-controller="User" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>
 
 
 

@@ -15,7 +15,7 @@ namespace Travel_Experts.Models
  
         [Required(ErrorMessage = "Please enter your Email.")]
         [StringLength(50)]
-//        [Remote("EmailExists", UserController, ErrorMessage="Email already exists.")]
+        [Remote("VerifyEmail", "User", ErrorMessage="Email already exists.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter your First Name.")]
@@ -28,6 +28,7 @@ namespace Travel_Experts.Models
 
        
         [StringLength(75)]
+        [Compare("cPassword")]
         [Required(ErrorMessage = "Please enter a password.")]
         public string Password { get; set; }
 

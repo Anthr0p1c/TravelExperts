@@ -10,17 +10,27 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Travel_Experts.Models;
-
+using System.Linq;
 
 namespace Travel_Experts.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult Login(string returnUrl = null  )
+
+        private readonly TravelExpertsContext _context;
+
+        public UserController(TravelExpertsContext context)
         {
-            if (returnUrl != null)
-                TempData["ReturnUrl"] = returnUrl; // preserve to come back to this page
-            return View();
+            _context = context;
+        }
+
+        public IActionResult Login()
+        {
+            return View("Login");
+        }
+        public IActionResult Register()
+        {
+            return View("Register");
         }
 
         [HttpPost]
@@ -47,19 +57,15 @@ namespace Travel_Experts.Controllers
 
                 // generate authentication cookie
                 await HttpContext.SignInAsync("Cookies", principal);
+                return Redirect(HttpContext.Session.GetString("Path"));
 
-                // if no return URl, go to the Index page of Rentals controller
-                if (TempData["ReturnUrl"] != null)
-                    return Redirect(TempData["ReturnUrl"].ToString());
-                else
-                    return RedirectToAction("Index", "Home");
             }
                 else
-                    return RedirectToAction("Index", "Home");
+                    return View(user);
         }//LoginAsync
 
         [HttpPost]
-        public RedirectToActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel)
+        public IActionResult Register([Bind("Email", "FirstName", "LastName", "Password", "cPassword")] UserViewModel ouserViewModel)
         {
 
 
@@ -86,17 +92,30 @@ namespace Travel_Experts.Controllers
                 int CustomerId = CustomerManager.addCustomer(nCustomer);
                 HttpContext.Session.SetInt32("CustomerId", CustomerId);
                 HttpContext.Session.SetString("Email", ouserViewModel.Email);
-                return RedirectToAction("Index", "Home");
+                return Redirect(HttpContext.Session.GetString("Path"));
             }
             else
-                return  RedirectToAction("form-container-register", "Home");
+                return View(ouserViewModel);
+        }
+
+        [HttpPost]
+   
+        public JsonResult VerifyEmail(string Email)
+        {
+            if (_context.Users.Where(i => i.Email.ToLowerInvariant().Equals(Email.ToLower())) != null)
+            {
+                return Json("Invalid Error Message");
+            }
+            return Json(true);
         }
 
         //client side validation of email
-        /*       public JsonResult EmailExists(string Email)
-               {
-                   return Json(data: true, JsonRequestBehavior.AllowGet);
-               }*/
+        //public JsonResult VerifyEmail(string Email)
+        //{
+        //    bool isExist = _context.Users.Where(i => i.Email.ToLowerInvariant().Equals(Email.ToLower())) != null;
+
+        //    return Json(!isExist, new Newtonsoft.Json.JsonSerializerSettings());
+        //}
 
         public async Task<IActionResult> LogoutAsync()
         {

@@ -30,19 +30,21 @@ namespace Travel_Experts.Models
             Customer customer = db.Customers.Where(c=>c.CustEmail.ToLower()==Email.ToLower()).FirstOrDefault();
             return customer;
         }
-<<<<<<< Updated upstream
- 
-=======
+
 
         public static List<Booking> getCustomerBookings(int CustId)
         {
             List<Booking> bookings;
             TravelExpertsContext db = new TravelExpertsContext();
+
             bookings = db.Bookings.Include(p=>p.Package).Where(b => b.CustomerId == CustId).OrderByDescending(b=>b.BookingId).ToList();
+
+            bookings = db.Bookings.Where(b => b.CustomerId == CustId).ToList();
+
             return bookings;
         }
 
 
->>>>>>> Stashed changes
+
     }
 }
